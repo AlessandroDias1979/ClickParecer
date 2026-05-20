@@ -1,0 +1,12 @@
+build
+.gradle
+.gradle/
+.git
+.gitignore
+.github
+.idea
+.vscode
+**/*.iml
+**/out
+**/tmp
+**/*.log
