@@ -1,19 +1,25 @@
-
-FROM eclipse-temurin:17-jdk-jammy AS build
+# Estágio de build
+FROM gradle:8.5-jdk21 AS build
 WORKDIR /app
 
-
-COPY gradlew ./
-COPY gradle ./gradle
+# Copia arquivos de build e wrapper
+COPY gradlew gradlew
+COPY gradle gradle
 COPY build.gradle settings.gradle ./
 COPY src ./src
 
-RUN chmod +x ./gradlew
-RUN ./gradlew bootJar --no-daemon
+# Permite executar o wrapper no container
+RUN chmod +x gradlew
 
+# Build do Spring Boot (sem testes)
+RUN ./gradlew bootJar -x test
 
-FROM eclipse-temurin:17-jre-jammy
+# Estágio de execução
+FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
-EXPOSE 8080
+
+# Copia o JAR empacotado
 COPY --from=build /app/build/libs/*.jar app.jar
-ENTRYPOINT ["sh", "-c", "java -jar /app.jar --server.port=${PORT:-8080}"]
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
