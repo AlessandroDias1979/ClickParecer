@@ -11,15 +11,9 @@ COPY src ./src
 # Permite executar o wrapper no container
 RUN chmod +x gradlew
 
-
-
-
 # Estágio de execução
 FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
-
-# Copia o JAR empacotado
-COPY --from=build /app/build/libs/*.jar app.jar
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
