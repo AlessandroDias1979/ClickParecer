@@ -11,8 +11,8 @@ COPY src ./src
 # Permite executar o wrapper no container
 RUN chmod +x gradlew
 
-# Build do Spring Boot (sem testes)
-RUN ./gradlew bootJar -x test
+
+
 
 # Estágio de execução
 FROM eclipse-temurin:21-jre-jammy
