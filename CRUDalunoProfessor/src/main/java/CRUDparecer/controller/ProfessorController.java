@@ -20,7 +20,7 @@ import CRUDparecer.service.ProfessorService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/professore")
+@RequestMapping("/professores")
 public class ProfessorController{
     
     private final ProfessorService professorService;
@@ -39,6 +39,13 @@ public class ProfessorController{
     @GetMapping("/{id}")
     public ResponseEntity<Professor> getProfessorById(@PathVariable Long id) {
         Professor professor = professorService.getProfessorById(id);
+        Optional<Professor> optionalProfessor = Optional.ofNullable(professor);
+        return optionalProfessor.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("login/{email}/{senha}")
+    public ResponseEntity<Professor> login(@PathVariable String email, @PathVariable String senha) {
+        Professor professor = professorService.login(email, senha);
         Optional<Professor> optionalProfessor = Optional.ofNullable(professor);
         return optionalProfessor.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
