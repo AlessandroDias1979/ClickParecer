@@ -20,7 +20,7 @@ import CRUDparecer.service.ProfessorService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/professore")
+@RequestMapping("/professor")
 public class ProfessorController{
     
     private final ProfessorService professorService;
