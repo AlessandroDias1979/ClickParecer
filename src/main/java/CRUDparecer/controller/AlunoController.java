@@ -50,7 +50,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunos);
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<Aluno> cadastrarAluno(@RequestBody Aluno aluno) {
         try {
             Aluno novo = alunoService.cadastrarAluno(aluno);
